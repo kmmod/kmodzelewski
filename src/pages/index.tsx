@@ -2,14 +2,14 @@ import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import React, { Suspense} from "react";
 import { Canvas } from "react-three-fiber";
 import { ChestModel } from "../components/chest"
-import { wrapper } from "../styles/main.module.scss";
+import { title, wrapper } from "../styles/main.module.scss";
 
 const IndexPage = () => {
 
   return (
     <main>
       <title>kmodzelewski</title>
-      <h1>kmodzelewski</h1>
+      <h1 className={title}>kmodzelewski</h1>
       <Canvas className={wrapper} style={{width: `100%`, height: `100vh`, position: `static`}} >
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
