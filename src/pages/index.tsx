@@ -1,6 +1,6 @@
 import React from "react";
 import MeshViewer from "../components/meshviewer";
-import { Canvas } from "react-three-fiber";
+import { Canvas } from "@react-three/fiber";
 import { title, wrapper } from "../styles/main.module.scss";
 import { OrbitControls } from "@react-three/drei";
 
