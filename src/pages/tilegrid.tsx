@@ -1,15 +1,19 @@
 import React, { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { title, wrapper } from "../styles/main.module.scss";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 
-const tile = (position: any) => {
+const tile = (position: any, index: number) => {
   const plane = useRef<THREE.Mesh>(null!);
   const [active, setActive] = useState(false);
-  useFrame(() => (plane.current.rotation.x += 0.01));
+  const clicked = () => {
+    console.log("clicked", index);
+  };
   return (
     <mesh
+      key={index}
       ref={plane}
+      onPointerDown={() => clicked()}
       onPointerOver={() => setActive(true)}
       onPointerOut={() => setActive(false)}
       rotation={[-Math.PI / 2, 0, 0]}
@@ -23,12 +27,14 @@ const tile = (position: any) => {
 };
 
 const tileMap = (size: number) => {
+  let index = 0;
   const tiles = [];
   for (let x = 0; x < size; x++) {
     for (let z = 0; z < size; z++) {
+      index += 1;
       const posX = -size / 2 + x;
       const posZ = -size / 2 + z;
-      const newTile = tile([posX, 0, posZ]);
+      const newTile = tile([posX, 0, posZ], index);
 
       tiles.push(newTile);
     }
@@ -57,7 +63,7 @@ const TileGrid = () => {
           autoRotateSpeed={-1.0}
           target={[0, 0, 0]}
         />
-        {tile([0,0,0])}
+        {tileMap(15)}
       </Canvas>
     </main>
   );
