@@ -1,3 +1,10 @@
+$colour-primary: #ebdac5;
+$colour-secondary: #2f3236;
+
+body {
+  background-color: $colour-secondary;
+}
+
 .wrapper {
   position: absolute;
   width: 100%;
@@ -6,4 +13,5 @@
 
 .title {
   font-family: sans-serif;
+  color: $colour-primary;
 }

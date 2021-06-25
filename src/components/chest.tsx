@@ -2,7 +2,6 @@ import * as THREE from "three";
 import React, { useRef } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
-import { Color } from "three";
 
 type GLTFResult = GLTF & {
   nodes: {
