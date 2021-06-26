@@ -13,11 +13,6 @@ const IndexPage = () => {
         className={wrapper}
         style={{ width: `100%`, height: `100vh`, position: `static` }}
       >
-        <OrbitControls
-          autoRotate={true}
-          autoRotateSpeed={-1.0}
-          target={[0, 0, 0]}
-        />
         <MeshViewer />
       </Canvas>
     </main>

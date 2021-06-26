@@ -18,10 +18,9 @@ export function ChestModel(props: JSX.IntrinsicElements["group"]) {
   map.magFilter = THREE.NearestFilter;
   map.minFilter = THREE.NearestFilter;
   const { nodes, materials } = useGLTF("/chest.gltf") as GLTFResult;
-  console.log(useGLTF("/chest.gltf"));
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
+      <group name="Scene" position={props.position}>
         <mesh
           name="chest"
           castShadow
