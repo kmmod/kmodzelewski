@@ -1,4 +1,10 @@
-import React, { Suspense, useState, useEffect, useRef } from "react";
+import React, {
+  Suspense,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { ChestModel } from "../components/chest";
 import gsap from "gsap";
@@ -9,10 +15,46 @@ const MeshViewer = () => {
   const cameraRef = useRef();
 
   useEffect(() => {
-    setGrid(chestsGrid(20));
-    console.log(cameraRef);
-    gsap.to(cameraRef.current.position, { x: 5, y: 5, z: 1, duration: 20 })
+    setGrid(chestsGrid(25));
+    animationOut();
   }, []);
+
+  const startPos = {
+    x: 0.1,
+    y: 1.0,
+    z: 0.6,
+  };
+
+  const endPos = {
+    x: 5.0,
+    y: 5.0,
+    z: -5.0,
+  };
+
+  const time = 30;
+
+  const animationOut = () => {
+    animation(endPos, animationIn);
+  };
+
+  const animationIn = () => {
+    animation(startPos, animationOut);
+  };
+
+  const animation = (pos: any, next: any) => {
+    gsap.to(cameraRef.current.position, {
+      y: pos.y,
+      duration: time,
+      ease: "power3.inOut",
+    });
+    gsap.to(cameraRef.current.position, {
+      x: pos.x,
+      z: pos.z,
+      duration: time,
+      ease: "power1.inOut",
+      onComplete: next,
+    });
+  };
 
   const chestsGrid = (size: number): any[] => {
     const positionArray = [];
@@ -34,7 +76,7 @@ const MeshViewer = () => {
       <PerspectiveCamera
         ref={cameraRef}
         makeDefault={true}
-        position={[-1.0, 1.0, 1.0]}
+        position={[0.1, 1.0, 1.0]}
         zoom={1}
         fov={25}
       />
