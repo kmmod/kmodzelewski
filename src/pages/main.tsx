@@ -1,9 +1,9 @@
 import React from "react";
-import ChestGrid from "../components/meshviewer";
+import Diorama from "../components/diorama";
 import { Canvas } from "@react-three/fiber";
 import { title, wrapper } from "../styles/main.module.scss";
 
-const MeshView = () => {
+const IndexPage = () => {
   return (
     <main>
       <title>kmodzelewski</title>
@@ -12,10 +12,10 @@ const MeshView = () => {
         className={wrapper}
         style={{ width: `100%`, height: `100vh`, position: `static` }}
       >
-        <ChestGrid />
+        <Diorama />
       </Canvas>
     </main>
   );
 };
 
-export default MeshView;
+export default IndexPage;

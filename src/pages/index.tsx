@@ -1,8 +1,7 @@
 import React from "react";
-import MeshViewer from "../components/meshviewer";
+import ChestGrid from "../components/chestgrid";
 import { Canvas } from "@react-three/fiber";
 import { title, wrapper } from "../styles/main.module.scss";
-import { OrbitControls } from "@react-three/drei";
 
 const IndexPage = () => {
   return (
@@ -13,7 +12,7 @@ const IndexPage = () => {
         className={wrapper}
         style={{ width: `100%`, height: `100vh`, position: `static` }}
       >
-        <MeshViewer />
+        <ChestGrid />
       </Canvas>
     </main>
   );
