@@ -42,70 +42,119 @@ export const Sphere = () => {
     return `
       uniform float time;
       varying vec3 vUv; 
-      
-      float rand(vec2 n) { 
-        return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
-      }
+      varying vec3 vViewPosition;
+      varying vec3 eyeVector;
+      varying vec3 worldNormal;
 
-      float noise(vec2 p){
-        vec2 ip = floor(p);
-        vec2 u = fract(p);
-        u = u*u*(3.0-2.0*u);
-        
-        float res = mix(
-          mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
-          mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
-        return res*res;
-      }
+      #include <common>
 
       void main() {
         vUv = position;
 
-        float angle = cos(vUv.y * (0.0)) * 1.0;
+        vec4 worldPos = modelMatrix * vec4( position, 1.0);
+        eyeVector = normalize(worldPos.xyz - cameraPosition);
+        worldNormal = normalize( modelViewMatrix * vec4(normal, 0.0)).xyz;
 
-        vec3 pos = position + (normal * noise(uv) * time * 3.0);
+        float modX = (sin(time * 0.6) * position.z * 2.0);
+        float modY = (sin(time * 0.3) * position.x * sin(time + 0.5) * 5.0);
+        float modZ = (sin(time * 0.4) * position.y * 3.0);
+        float posModX = position.x + position.z * modX;
+        float posModY = position.y + position.x * modY;
+        float posModZ = position.z + position.y * modZ;
 
-        vec4 modelViewPosition = modelViewMatrix * vec4(position, angle);
-        gl_Position = projectionMatrix * modelViewPosition + vec4(pos, 1.0); 
+        vec4 modelViewPosition = modelViewMatrix * vec4(posModX, posModY, posModZ, 1.0);
+      	#include <begin_vertex>
+        #include <project_vertex>
+        vViewPosition = - mvPosition.xyz;
+        gl_Position = projectionMatrix * modelViewPosition; 
       }
     `;
   };
 
   const fragmentShader = () => {
     return `
+      uniform float time;
       uniform vec3 colorA; 
       uniform vec3 colorB; 
+      uniform vec3 specular;
       varying vec3 vUv;
 
+      varying vec3 eyeVector;
+      varying vec3 worldNormal;
+
+      #include <common>
+      #include <bsdfs>
+      #include <lightmap_pars_fragment>
+      #include <lights_pars_begin>
+      #include <lights_phong_pars_fragment>
+      #include <specularmap_pars_fragment>
+
+      vec3 cosPalette(float t, vec3 a, vec3 b, vec3 c, vec3 d) {
+        return a + b * cos(6.28318 * (c * t + d));
+      }   
+
+      float Fresnel(vec3 eyeVector, vec3 worldNormal) {
+        return pow( 1.0 + dot( eyeVector, worldNormal), 3.0 );
+      }
+      
       void main() {
-        gl_FragColor = vec4(mix(colorA, colorB, vUv.y), 1.0);
+        vec4 diffuseColor = vec4( colorA, 1.0 );
+
+        #include <color_fragment>
+        #include <specularmap_fragment>
+        
+        vec3 normal = worldNormal;
+        float f = Fresnel(eyeVector, normal);
+
+        vec3 brightness = vec3(0.5, 0.5, 0.5);
+        vec3 contrast = vec3(0.5, 0.5, 0.5);
+        vec3 oscilation = vec3(1.0, 1.0, 1.0);
+        vec3 phase = vec3(0.0, 0.1, 0.2);
+
+        float shininess = 0.5;
+        
+        vec3 color = cosPalette(time, brightness, contrast, oscilation, phase);
+        
+        ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
+        reflectedLight.indirectDiffuse += vec3( 1.0 );
+        reflectedLight.indirectDiffuse *= diffuseColor.rgb;
+
+        // accumulation
+        #include <lights_phong_fragment>
+        #include <lights_fragment_begin>
+        #include <lights_fragment_maps>
+        #include <lights_fragment_end>
+
+
+	      vec3 outgoingLight = mix(reflectedLight.indirectDiffuse , color, vUv.y) + reflectedLight.directSpecular;
+        // gl_FragColor = vec4(mix(colorA, colorB, vUv.y), 1.0);
+        gl_FragColor = vec4( outgoingLight, diffuseColor.a );
+        // gl_FragColor = vec4( color, 1.0 );
+        
+        #include <tonemapping_fragment>
       }
     `;
   };
 
   const uniforms = {
-    colorA: { type: "vec3", value: new THREE.Color(0xff00aa) },
-    colorB: { type: "vec3", value: new THREE.Color(0xffffff) },
+    colorA: { type: "vec3", value: new THREE.Color(0xffd278) },
+    colorB: { type: "vec3", value: new THREE.Color(0x217aff) },
+    specular: { type: "vec3", value: new THREE.Color(0xffffff) },
     time: { value: 0.0 },
   };
 
   const timeJump = {
-    value: 0.0
-  }
+    value: 0.0,
+  };
 
   const interval = setInterval(() => {
     timeJump.value += 0.01;
     uniforms.time.value = Math.sin(timeJump.value);
-  }, 10)
+  }, 16);
 
   return (
     <mesh ref={mesh}>
       <sphereGeometry args={[1, 32, 32]} />
-      <shaderMaterial
-        uniforms={uniforms}
-        vertexShader={vertexShader()}
-        fragmentShader={fragmentShader()}
-      />
       <meshPhysicalMaterial
         wireframe={false}
         color={"orange"}
@@ -113,6 +162,11 @@ export const Sphere = () => {
         metalness={0.995}
         clearcoat={0.95}
         clearcoatRoughness={0.93}
+      />
+      <shaderMaterial
+        uniforms={uniforms}
+        vertexShader={vertexShader()}
+        fragmentShader={fragmentShader()}
       />
     </mesh>
   );
