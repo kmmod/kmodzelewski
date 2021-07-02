@@ -2,7 +2,7 @@ import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { container } from "../../styles/puzzle.module.scss";
 import { PuzzleOptions } from "./types";
-import { TileGrid } from "./tile";
+import { TileGrid } from "./tileGrid";
 
 const PuzzleMain = (props: PuzzleOptions) => {
   // logic for game
@@ -10,7 +10,9 @@ const PuzzleMain = (props: PuzzleOptions) => {
   return (
     <div className={container}>
       <Canvas>
-        <TileGrid size={{ x: 4, y: 4 }} />
+        <ambientLight intensity={0.1} />
+        <pointLight position={[0, 10, 5]} intensity={0.2} />
+        <TileGrid size={props.size} />
       </Canvas>
     </div>
   );

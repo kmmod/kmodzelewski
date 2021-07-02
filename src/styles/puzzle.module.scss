@@ -3,4 +3,12 @@
   height: 100%;
   top: 0;
   position: absolute;
+  z-index: -1;
+}
+
+.content {
+  font-family: sans-serif;
+  transform: translate3d(-50%,-50%,0);
+  color: white;
+  user-select: none;
 }

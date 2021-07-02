@@ -1,37 +1,48 @@
-import React from "react";
-import { GridSize, TileProperties } from "./types";
+import { TileProperties } from "./types";
+import React, { MutableRefObject, useRef } from "react";
+import { ThreeEvent } from "@react-three/fiber";
+import gsap from "gsap";
+import { Html } from "@react-three/drei";
+import { content } from "../../styles/puzzle.module.scss";
 
-export const TileGrid = (props: GridSize) => {
-  const factor = 1;
-  const step = 1;
-  const size = props.size.x * props.size.y;
+export const Tile = (options: TileProperties) => {
+  const mesh = useRef(null) as MutableRefObject<any>;
+
+  const onOver = (event: ThreeEvent<PointerEvent>) => {
+    return;
+  };
+
+  const onHover = (event: ThreeEvent<PointerEvent>) => {
+    if (event && event.uv !== undefined) {
+      const distanceX = (event.uv.x - 0.5) * 0.4;
+      const distanceY = (0.5 - event.uv.y) * 0.4;
+      animateRotation(distanceY, distanceX);
+    }
+  };
+
+  const onOut = () => {
+    animateRotation(0, 0);
+  };
+
+  const animateRotation = (destX: number, destY: number) => {
+    gsap.to(mesh.current.rotation, { x: destX, y: destY, duration: 0.5 });
+  };
 
   return (
-    <>
-      {[...Array(size)].map((item: any, index: number) => {
-        const currentRow = Math.trunc(index / props.size.x);
-        const offsetY = 0 - props.size.y / 2 + step / 2;
-        const offsetX = 0 - props.size.x / 2 + step / 2;
-
-        const positionY = (offsetY + currentRow) * factor;
-
-        const positionX =
-          (offsetX + index - currentRow * props.size.x) * factor;
-
-        return <Tile position={{ x: positionX, y: positionY }} key={index} />;
-      })}
-    </>
-  );
-};
-
-const Tile = (options: TileProperties) => {
-  return (
-    <mesh
-      position={[options.position.x, options.position.y, 0]}
-      scale={[0.95, 0.95, 0.95]}
-    >
-      <planeGeometry />
-      <meshStandardMaterial color={"orange"} />
-    </mesh>
+    <group position={[options.position.x, options.position.y, 0]}>
+      <mesh
+        ref={mesh}
+        scale={[0.95, 0.95, 0.95]}
+        onPointerOver={(event) => onOver(event)}
+        onPointerMove={(event) => onHover(event)}
+        onPointerOut={() => onOut()}
+      >
+        <planeGeometry />
+        <meshStandardMaterial color={"orange"} />
+        <Html distanceFactor={10}>
+          <div className={content}>{options.id}</div>
+        </Html>
+      </mesh>
+    </group>
   );
 };
