@@ -20,7 +20,7 @@ const Demo = () => {
       />
       <Light position={[10,10,10]} color={"orange"} time={3}/>
       <Light position={[-20,5,2]} color={"red"} time={2}/>
-      <Light position={[10,-30,-10]} color={"lightblue"} time={10}/>
+      <Light position={[10,-30,-10]} color={"white"} time={10}/>
       <Sphere/>
     </>
   );
