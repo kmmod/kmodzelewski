@@ -17,6 +17,8 @@ const Demo = () => {
         autoRotate={true}
         autoRotateSpeed={-1.0}
         target={[0, 0, 0]}
+        enableZoom={false}
+        enablePan={false}
       />
       <Light position={[10,10,10]} color={"orange"} time={3}/>
       <Light position={[-20,5,2]} color={"red"} time={2}/>
