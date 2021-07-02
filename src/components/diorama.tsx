@@ -1,12 +1,12 @@
 import React, { Suspense } from "react";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { ChestModel } from "../components/chest";
+import { Man31 } from "../components/man31";
 
-const MeshViewer = () => {
+const Diorama = () => {
   return (
     <>
       <ambientLight />
-      <pointLight position={[10, 10, 10]} />
+      <pointLight position={[10, 10, 10]} intensity={0.2}/>
       <PerspectiveCamera
         makeDefault={true}
         position={[0.1, 1.0, 1.0]}
@@ -16,13 +16,13 @@ const MeshViewer = () => {
       <OrbitControls
         autoRotate={true}
         autoRotateSpeed={-1.0}
-        target={[0, 0, 0]}
+        target={[0, 0.15, 0]}
       />
       <Suspense fallback={null}>
-        <ChestModel position={[0, 0, 0]} />
+        <Man31 position={[0, 0, 0]} />
       </Suspense>
     </>
   );
 };
 
-export default MeshViewer;
+export default Diorama;
