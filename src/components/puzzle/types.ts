@@ -7,6 +7,10 @@ export interface GridSize {
   size: Vector2d;
 }
 
+export interface GridOptions extends GridSize {
+  setTiles: any;
+}
+
 export interface PuzzleOptions extends GridSize {
   colours: number;
 }

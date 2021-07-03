@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/src/components/puzzle/gems.tsx">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/src/components/puzzle/main.tsx">
           <value>
             <Attribute>
@@ -17,7 +24,28 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/src/components/puzzle/puzzleState.tsx">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/src/components/puzzle/tile.tsx">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/src/components/puzzle/tileGrid.tsx">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/src/pages/puzzle.tsx">
           <value>
             <Attribute>
               <option name="separator" value=";" />

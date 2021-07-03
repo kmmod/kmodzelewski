@@ -14,8 +14,8 @@ export const Tile = (options: TileProperties) => {
 
   const onHover = (event: ThreeEvent<PointerEvent>) => {
     if (event && event.uv !== undefined) {
-      const distanceX = (event.uv.x - 0.5) * 0.4;
-      const distanceY = (0.5 - event.uv.y) * 0.4;
+      const distanceX = (event.uv.x - 0.5) * 0.8;
+      const distanceY = (0.5 - event.uv.y) * 0.8;
       animateRotation(distanceY, distanceX);
     }
   };
@@ -30,18 +30,21 @@ export const Tile = (options: TileProperties) => {
 
   return (
     <group position={[options.position.x, options.position.y, 0]}>
-      <mesh
-        ref={mesh}
-        scale={[0.95, 0.95, 0.95]}
-        onPointerOver={(event) => onOver(event)}
-        onPointerMove={(event) => onHover(event)}
-        onPointerOut={() => onOut()}
-      >
+      <mesh ref={mesh} scale={[0.95, 0.95, 0.95]}>
         <planeGeometry />
-        <meshStandardMaterial color={"orange"} />
+        <meshStandardMaterial color={"white"} roughness={0.9} metalness={0.4} />
         <Html distanceFactor={10}>
           <div className={content}>{options.id}</div>
         </Html>
+      </mesh>
+      <mesh
+        onPointerOver={(event) => onOver(event)}
+        onPointerMove={(event) => onHover(event)}
+        onPointerOut={() => onOut()}
+        visible={false}
+      >
+        <planeGeometry />
+        <meshBasicMaterial wireframe={true} />
       </mesh>
     </group>
   );
