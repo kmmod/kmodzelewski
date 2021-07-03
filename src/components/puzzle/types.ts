@@ -15,7 +15,6 @@ export interface PuzzleOptions extends GridSize {
   colours: number;
 }
 
-export interface TileProperties {
-  position: Vector2d;
+export interface TilesProps extends Vector2d {
   id: number;
 }

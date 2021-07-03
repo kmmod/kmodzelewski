@@ -12,11 +12,11 @@ export const Gem = (props: any) => {
 
   useEffect(() => {
     document.body.style.cursor = hovered ? "pointer" : "auto";
-    wobbleSize(hovered ? 0.5 : 0);
+    wobbleSize(hovered ? 0.2 : 0);
   }, [hovered]);
 
   useEffect(() => {
-    const scale = selected ? 0.8 : 0.5;
+    const scale = selected ? 0.8 : 0.6;
     gsap.to(gem.current.scale, { x: scale, y: scale, z: scale, duration: 1 });
   }, [selected]);
 

@@ -1,6 +1,5 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
-import { Vector3 } from "@react-three/fiber";
 import gsap from "gsap";
 
 export const Camera = (props: any) => {

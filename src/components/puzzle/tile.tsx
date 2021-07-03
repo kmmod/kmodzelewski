@@ -1,11 +1,11 @@
-import { TileProperties } from "./types";
+import { TilesProps } from "./types";
 import React, { MutableRefObject, useRef } from "react";
 import { ThreeEvent } from "@react-three/fiber";
 import gsap from "gsap";
 import { Html } from "@react-three/drei";
 import { content } from "../../styles/puzzle.module.scss";
 
-export const Tile = (options: TileProperties) => {
+export const Tile = (options: TilesProps) => {
   const mesh = useRef(null) as MutableRefObject<any>;
 
   const onOver = (event: ThreeEvent<PointerEvent>) => {
@@ -29,13 +29,13 @@ export const Tile = (options: TileProperties) => {
   };
 
   return (
-    <group position={[options.position.x, options.position.y, 0]}>
+    <group position={[options.x, options.y, 0]}>
       <mesh ref={mesh} scale={[0.95, 0.95, 0.95]}>
         <planeGeometry />
         <meshStandardMaterial color={"white"} roughness={0.9} metalness={0.4} />
-        <Html distanceFactor={10}>
-          <div className={content}>{options.id}</div>
-        </Html>
+        {/*<Html distanceFactor={10}>*/}
+        {/*  <div className={content}>{options.id}</div>*/}
+        {/*</Html>*/}
       </mesh>
       <mesh
         onPointerOver={(event) => onOver(event)}
