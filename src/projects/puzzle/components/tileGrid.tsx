@@ -1,8 +1,10 @@
-import React from "react";
-import { TilesProps } from "./types";
+import React, { useState } from "react";
+import { TilesProps } from "../core/types";
 import { Tile } from "./tile";
 
 export const TileGrid = (props: any) => {
+  const [tileGrid, setTileGrid] = useState<any>([]);
+
   return (
     <>
       {props.tiles.map((item: TilesProps) => {

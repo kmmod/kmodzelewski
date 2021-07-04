@@ -1,9 +1,9 @@
-import { TilesProps } from "./types";
+import { TilesProps } from "../core/types";
 import React, { MutableRefObject, useRef } from "react";
 import { ThreeEvent } from "@react-three/fiber";
 import gsap from "gsap";
 import { Html } from "@react-three/drei";
-import { content } from "../../styles/puzzle.module.scss";
+import { content } from "../../../styles/puzzle.module.scss";
 
 export const Tile = (options: TilesProps) => {
   const mesh = useRef(null) as MutableRefObject<any>;

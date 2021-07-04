@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { container } from "../../styles/puzzle.module.scss";
-import { Gems } from "./gems";
-import { PuzzleOptions } from "./types";
-import { TileGrid } from "./tileGrid";
-import { Camera } from "./camera";
-import { createTileMap } from "./build";
+import { Gems } from "./components/gems";
+import { PuzzleOptions } from "./core/types";
+import { TileGrid } from "./components/tileGrid";
+import { Camera } from "./components/camera";
+import { createTileMap } from "./core/build";
 
 const PuzzleMain = (props: PuzzleOptions) => {
   const [tiles, setTiles] = useState<any>([]);

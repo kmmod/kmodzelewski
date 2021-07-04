@@ -16,3 +16,8 @@ export const createTileMap = (props: any): TilesProps[] => {
     return { x: positionX, y: positionY, id: index, empty: true };
   });
 };
+
+export const getRandomId = (range: number) => {
+  const random = Math.round(Math.random() * range);
+  return random;
+};

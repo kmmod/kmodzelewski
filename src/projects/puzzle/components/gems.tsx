@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Gem } from "./gem";
-import { TilesProps } from "./types";
+import { TilesProps } from "../core/types";
 
 export const Gems = (props: any) => {
   console.log(props.tiles);

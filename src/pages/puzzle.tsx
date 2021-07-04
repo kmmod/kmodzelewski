@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../components/home/header";
-import PuzzleMain from "../components/puzzle/main";
-import { PuzzleState } from "../components/puzzle/puzzleState";
+import PuzzleMain from "../projects/puzzle/main";
+import { PuzzleState } from "../projects/puzzle/components/puzzleState";
 
 const PuzzlePage = () => {
   const [size, setSize] = useState({ x: 3, y: 3 });
