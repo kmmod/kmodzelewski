@@ -20,6 +20,15 @@ export const Gem = (props: any) => {
     gsap.to(gem.current.scale, { x: scale, y: scale, z: scale, duration: 1 });
   }, [selected]);
 
+  useEffect(() => {
+    setSelected(false);
+  }, [props.deselect]);
+
+  const onSelected = () => {
+    setSelected(true);
+    props.onSelected(props.id);
+  };
+
   const baseZ = 0.5;
 
   const wobbleSize = (size: number) => {
@@ -46,7 +55,7 @@ export const Gem = (props: any) => {
       <mesh
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
-        onPointerDown={() => setSelected(!selected)}
+        onPointerDown={() => onSelected()}
         visible={false}
       >
         <planeGeometry args={[1.0, 1.0, 1.0]} />

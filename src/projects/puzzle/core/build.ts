@@ -13,11 +13,34 @@ export const createTileMap = (props: any): TilesProps[] => {
     const positionY = (offsetY + currentRow) * factor;
     const positionX = (offsetX + index - currentRow * props.size.x) * factor;
 
-    return { x: positionX, y: positionY, id: index, empty: true };
+    return {
+      x: positionX,
+      y: positionY,
+      id: index,
+      empty: true,
+      clickedTile: null,
+    };
   });
 };
 
 export const getRandomId = (range: number) => {
-  const random = Math.trunc(Math.random() * (range + 1));
-  return random;
+  return Math.trunc(Math.random() * (range + 1));
+};
+
+export const getRandomTiles = (
+  count: number,
+  tiles: TilesProps[]
+): TilesProps[] => {
+  console.log(tiles);
+
+  const remainingTiles = [...tiles];
+  const returningTiles = [];
+
+  for (let i = 0; i < count; i++) {
+    const random =
+      remainingTiles[Math.floor(Math.random() * remainingTiles.length)];
+    remainingTiles.splice(remainingTiles.indexOf(random), 1);
+    returningTiles.push(random);
+  }
+  return returningTiles;
 };

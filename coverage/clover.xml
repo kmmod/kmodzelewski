@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1625457522707" clover="3.2.0">
+  <project timestamp="1625457522707" name="All files">
+    <metrics statements="13" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1" elements="16" coveredelements="4" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
+    <file name="build.ts" path="/Users/user/dev/kmodzelewski/src/projects/puzzle/core/build.ts">
+      <metrics statements="13" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="5" count="0" type="stmt"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+      <line num="10" count="0" type="stmt"/>
+      <line num="11" count="0" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="16" count="0" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="21" count="11002" type="stmt"/>
+    </file>
+  </project>
+</coverage>

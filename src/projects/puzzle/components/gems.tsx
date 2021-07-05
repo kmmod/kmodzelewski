@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Gem } from "./gem";
 import { TilesProps } from "../core/types";
+import { getRandomTiles } from "../core/build";
 
 export const Gems = (props: any) => {
   console.log(props.tiles);
@@ -24,19 +25,4 @@ export const Gems = (props: any) => {
   }, [props.tiles]);
 
   return <>{gems}</>;
-};
-
-const getRandomTiles = (count: number, tiles: TilesProps[]): TilesProps[] => {
-  console.log(tiles);
-
-  const remainingTiles = [...tiles];
-  const returningTiles = [];
-
-  for (let i = 0; i < count; i++) {
-    const random =
-      remainingTiles[Math.floor(Math.random() * remainingTiles.length)];
-    remainingTiles.splice(remainingTiles.indexOf(random), 1);
-    returningTiles.push(random);
-  }
-  return returningTiles;
 };

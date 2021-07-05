@@ -7,6 +7,10 @@ export interface GridSize {
   size: Vector2d;
 }
 
+export interface Position {
+  position: Vector2d;
+}
+
 export interface GridOptions extends GridSize {
   setTiles: any;
 }
@@ -17,4 +21,6 @@ export interface PuzzleOptions extends GridSize {
 
 export interface TilesProps extends Vector2d {
   id: number;
+  empty: boolean;
+  clickedTile: any;
 }

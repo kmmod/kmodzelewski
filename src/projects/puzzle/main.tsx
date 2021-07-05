@@ -23,7 +23,6 @@ const PuzzleMain = (props: PuzzleOptions) => {
         <pointLight position={[0, -10, 5]} intensity={0.2} color={"blue"} />
 
         <TileGrid tiles={tiles} />
-        <Gems tiles={tiles} />
         <Camera size={props.size} />
       </Canvas>
     </div>

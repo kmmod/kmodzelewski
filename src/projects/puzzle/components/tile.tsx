@@ -8,6 +8,10 @@ import { content } from "../../../styles/puzzle.module.scss";
 export const Tile = (options: TilesProps) => {
   const mesh = useRef(null) as MutableRefObject<any>;
 
+  const onSelect = () => {
+    options.clickedTile(options.id);
+  };
+
   const onOver = (event: ThreeEvent<PointerEvent>) => {
     return;
   };
@@ -41,6 +45,7 @@ export const Tile = (options: TilesProps) => {
         onPointerOver={(event) => onOver(event)}
         onPointerMove={(event) => onHover(event)}
         onPointerOut={() => onOut()}
+        onPointerDown={() => onSelect()}
         visible={false}
       >
         <planeGeometry />
