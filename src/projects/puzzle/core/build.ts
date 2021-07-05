@@ -18,6 +18,6 @@ export const createTileMap = (props: any): TilesProps[] => {
 };
 
 export const getRandomId = (range: number) => {
-  const random = Math.round(Math.random() * range);
+  const random = Math.trunc(Math.random() * (range + 1));
   return random;
 };
