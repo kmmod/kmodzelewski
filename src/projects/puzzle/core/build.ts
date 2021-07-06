@@ -1,6 +1,6 @@
-import { TilesProps } from "./types";
+import { TileCoord, TileProp } from "./types";
 
-export const createTileMap = (props: any): TilesProps[] => {
+export const createTileMap = (props: any): TileProp[] => {
   const factor = 1;
   const step = 1;
   const size = props.size.x * props.size.y;
@@ -17,8 +17,11 @@ export const createTileMap = (props: any): TilesProps[] => {
       x: positionX,
       y: positionY,
       id: index,
+      gemId: null,
       empty: true,
-      clickedTile: null,
+      hovered: false,
+      clicked: false,
+      selected: false,
     };
   });
 };
@@ -29,8 +32,8 @@ export const getRandomId = (range: number) => {
 
 export const getRandomTiles = (
   count: number,
-  tiles: TilesProps[]
-): TilesProps[] => {
+  tiles: TileProp[]
+): TileProp[] => {
   console.log(tiles);
 
   const remainingTiles = [...tiles];

@@ -1,22 +1,22 @@
-import { TilesProps } from "../core/types";
+import { TileComponent } from "../core/types";
 import React, { MutableRefObject, useRef } from "react";
 import { ThreeEvent } from "@react-three/fiber";
 import gsap from "gsap";
 import { Html } from "@react-three/drei";
 import { content } from "../../../styles/puzzle.module.scss";
 
-export const Tile = (options: TilesProps) => {
+export const Tile = (props: TileComponent) => {
   const mesh = useRef(null) as MutableRefObject<any>;
 
-  const onSelect = () => {
-    options.clickedTile(options.id);
+  const onClicked = () => {
+    props.onClicked(props.id);
   };
 
-  const onOver = (event: ThreeEvent<PointerEvent>) => {
-    return;
+  const onHover = () => {
+    props.onHover(props.id);
   };
 
-  const onHover = (event: ThreeEvent<PointerEvent>) => {
+  const onHoverMove = (event: ThreeEvent<PointerEvent>) => {
     if (event && event.uv !== undefined) {
       const distanceX = (event.uv.x - 0.5) * 0.8;
       const distanceY = (0.5 - event.uv.y) * 0.8;
@@ -33,7 +33,7 @@ export const Tile = (options: TilesProps) => {
   };
 
   return (
-    <group position={[options.x, options.y, 0]}>
+    <group position={[props.x, props.y, 0]}>
       <mesh ref={mesh} scale={[0.95, 0.95, 0.95]}>
         <planeGeometry />
         <meshStandardMaterial color={"white"} roughness={0.9} metalness={0.4} />
@@ -42,10 +42,10 @@ export const Tile = (options: TilesProps) => {
         {/*</Html>*/}
       </mesh>
       <mesh
-        onPointerOver={(event) => onOver(event)}
-        onPointerMove={(event) => onHover(event)}
+        onPointerOver={(event) => onHover()}
+        onPointerMove={(event) => onHoverMove(event)}
         onPointerOut={() => onOut()}
-        onPointerDown={() => onSelect()}
+        onPointerDown={() => onClicked()}
         visible={false}
       >
         <planeGeometry />

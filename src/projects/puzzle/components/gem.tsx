@@ -2,10 +2,13 @@ import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { MeshWobbleMaterial } from "@react-three/drei";
 import * as THREE from "three";
+import { gemColor, maxColors } from "../core/config";
+import { getRandomId } from "../core/build";
 
 export const Gem = (props: any) => {
   const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [color, setColor] = useState(String);
 
   const gem = useRef(null) as MutableRefObject<any>;
   const wobbleMat = useRef(null) as MutableRefObject<any>;
@@ -24,10 +27,27 @@ export const Gem = (props: any) => {
     setSelected(false);
   }, [props.deselect]);
 
+  useEffect(() => {
+    const colorId = getRandomId(maxColors);
+    const newColor = gemColor(colorId);
+    console.log(newColor);
+    setColor(newColor);
+  }, []);
+
   const onSelected = () => {
     setSelected(true);
     props.onSelected(props.id);
   };
+
+  // const getColor = () => {
+  //   const colorId = getRandomId(maxColors);
+  //   const newColor = gemColor(colorId);
+  //   console.log(newColor);
+  //   // setColor(newColor);
+  //   return newColor;
+  // };
+  //
+  // const color = getColor();
 
   const baseZ = 0.5;
 
@@ -48,8 +68,8 @@ export const Gem = (props: any) => {
           ref={wobbleMat}
           factor={0}
           speed={5}
-          color={new THREE.Color(0xff0000)}
-          emissive={new THREE.Color(0xff000022)}
+          color={new THREE.Color(color)}
+          emissive={new THREE.Color("#000000")}
         />
       </mesh>
       <mesh
