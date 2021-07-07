@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { TileComponent, TileProp } from "../core/types";
+import { TileProp } from "../core/types";
 import { Tile } from "./tile";
+import { useRecoilState } from "recoil";
+import { tilesState } from "../core/state";
 
-export const Tiles = (props: any) => {
+export const Tiles = () => {
+  const [tileMap, setTileMap] = useRecoilState<TileProp[]>(tilesState);
   const [tiles, setTiles] = useState<any[]>([]);
 
   useEffect(() => {
-    const newTiles = props.tileMap.map((item: TileProp) => {
+    const newTiles = tileMap.map((item: TileProp) => {
       return (
         <Tile
           id={item.id}
@@ -19,15 +22,9 @@ export const Tiles = (props: any) => {
       );
     });
     setTiles(newTiles);
-    console.log(
-      props.tileMap.filter((item: any) => item.selected).length,
-      "im setting"
-    );
-  }, [props.tileMap]);
+  }, [tileMap]);
 
-  const tileClicked = (id: number) => {
-    props.setSelected(id);
-  };
+  const tileClicked = (id: number) => {};
 
   const tileHover = (id: number) => {};
 

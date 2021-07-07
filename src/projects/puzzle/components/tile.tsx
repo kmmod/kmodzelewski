@@ -8,13 +8,9 @@ import { content } from "../../../styles/puzzle.module.scss";
 export const Tile = (props: TileComponent) => {
   const mesh = useRef(null) as MutableRefObject<any>;
 
-  const onClicked = () => {
-    props.onClicked(props.id);
-  };
+  const onClicked = () => {};
 
-  const onHover = () => {
-    props.onHover(props.id);
-  };
+  const onHover = () => {};
 
   const onHoverMove = (event: ThreeEvent<PointerEvent>) => {
     if (event && event.uv !== undefined) {

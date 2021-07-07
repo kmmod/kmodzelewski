@@ -4,11 +4,17 @@ import { MeshWobbleMaterial } from "@react-three/drei";
 import * as THREE from "three";
 import { gemColor, maxColors } from "../core/config";
 import { getRandomId } from "../core/build";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { selectedGem, startState } from "../core/state";
 
 export const Gem = (props: any) => {
   const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState(false);
   const [color, setColor] = useState(String);
+
+  const [current, setCurrent] = useRecoilState(selectedGem);
+
+  const start = useRecoilValue(startState);
 
   const gem = useRef(null) as MutableRefObject<any>;
   const wobbleMat = useRef(null) as MutableRefObject<any>;
@@ -20,34 +26,27 @@ export const Gem = (props: any) => {
 
   useEffect(() => {
     const scale = selected ? 0.8 : 0.6;
-    gsap.to(gem.current.scale, { x: scale, y: scale, z: scale, duration: 1 });
+    gsap.to(gem.current.scale, { x: scale, y: scale, z: scale, duration: 0.5 });
   }, [selected]);
-
-  useEffect(() => {
-    // setSelected(false);
-  }, [props.deselect]);
 
   useEffect(() => {
     const colorId = getRandomId(maxColors);
     const newColor = gemColor(colorId);
-    console.log(newColor);
     setColor(newColor);
   }, []);
 
-  const onSelected = () => {
-    // setSelected(true);
-    // props.onSelected(props.id);
-  };
+  useEffect(() => {
+    setSelected(current === props.id);
+  }, [current]);
 
-  // const getColor = () => {
-  //   const colorId = getRandomId(maxColors);
-  //   const newColor = gemColor(colorId);
-  //   console.log(newColor);
-  //   // setColor(newColor);
-  //   return newColor;
-  // };
-  //
-  // const color = getColor();
+  useEffect(() => {
+    setCurrent(null);
+  }, [start]);
+
+  const onSelected = () => {
+    const checkCurrent = current === props.id;
+    setCurrent(checkCurrent ? null : props.id);
+  };
 
   const baseZ = 0.5;
 
@@ -64,6 +63,7 @@ export const Gem = (props: any) => {
       <mesh ref={gem} position={[0, 0, baseZ]} scale={[0.5, 0.5, 0.5]}>
         <boxGeometry />
         <meshStandardMaterial color={"red"} />
+        {/*// @ts-ignore*/}
         <MeshWobbleMaterial
           ref={wobbleMat}
           factor={0}

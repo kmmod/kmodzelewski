@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { GridSize, TileProp } from "../core/types";
+import React, { useEffect } from "react";
+import { TileProp } from "../core/types";
+import { useRecoilState } from "recoil";
+import { selectedGem, startState, tilesState } from "../core/state";
 import { createTileMap } from "../core/build";
-import { Tiles } from "./tiles";
 
-export const TileMap = (props: any) => {
-  const [tileMap, setTileMap] = useState<TileProp[]>();
+export const TileMap = (props: any): null => {
+  const [tiles, setTiles] = useRecoilState<TileProp[]>(tilesState);
+  const [start, setStart] = useRecoilState<number>(startState);
+  const [current, setCurrent] = useRecoilState(selectedGem);
 
-  // useEffect(() => {
-  //   const newTileMap = createTileMap(props.size);
-  //   setTileMap(newTileMap);
-  //   console.log(newTileMap);
-  // }, [props.size]);
+  useEffect(() => {
+    const tileMap = createTileMap(props.size);
+    setTiles(tileMap);
+    setStart(start + 1);
+  }, [props.size]);
 
-  return (
-    <>
-      <Tiles tileMap={props.size} />
-    </>
-  );
+  return null;
 };

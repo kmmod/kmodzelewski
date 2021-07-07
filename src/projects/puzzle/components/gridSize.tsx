@@ -1,6 +1,6 @@
 import React, { MutableRefObject, useRef } from "react";
 
-export const PuzzleState = (props: any) => {
+export const GridSize = (props: any) => {
   const sizeX = useRef() as MutableRefObject<HTMLInputElement>;
   const sizeY = useRef() as MutableRefObject<HTMLInputElement>;
 

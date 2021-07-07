@@ -34,8 +34,6 @@ export const getRandomTiles = (
   count: number,
   tiles: TileProp[]
 ): TileProp[] => {
-  console.log(tiles);
-
   const remainingTiles = [...tiles];
   const returningTiles = [];
 
