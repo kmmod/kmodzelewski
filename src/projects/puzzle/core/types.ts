@@ -1,7 +1,7 @@
-type Vector2d = {
+export interface Vector2d {
   x: number;
   y: number;
-};
+}
 
 export interface GridSize {
   size: Vector2d;

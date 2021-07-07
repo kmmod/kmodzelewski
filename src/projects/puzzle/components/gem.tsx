@@ -24,7 +24,7 @@ export const Gem = (props: any) => {
   }, [selected]);
 
   useEffect(() => {
-    setSelected(false);
+    // setSelected(false);
   }, [props.deselect]);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export const Gem = (props: any) => {
   }, []);
 
   const onSelected = () => {
-    setSelected(true);
-    props.onSelected(props.id);
+    // setSelected(true);
+    // props.onSelected(props.id);
   };
 
   // const getColor = () => {

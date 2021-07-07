@@ -1,17 +1,17 @@
-import { TileCoord, TileProp } from "./types";
+import { GridSize, TileCoord, TileProp, Vector2d } from "./types";
 
-export const createTileMap = (props: any): TileProp[] => {
+export const createTileMap = (size: Vector2d): TileProp[] => {
   const factor = 1;
   const step = 1;
-  const size = props.size.x * props.size.y;
+  const listSize = size.x * size.y;
 
-  return [...Array(size)].map((item: any, index: number) => {
-    const currentRow = Math.trunc(index / props.size.x);
-    const offsetY = 0 - props.size.y / 2 + step / 2;
-    const offsetX = 0 - props.size.x / 2 + step / 2;
+  return [...Array(listSize)].map((item: any, index: number) => {
+    const currentRow = Math.trunc(index / size.x);
+    const offsetY = 0 - size.y / 2 + step / 2;
+    const offsetX = 0 - size.x / 2 + step / 2;
 
     const positionY = (offsetY + currentRow) * factor;
-    const positionX = (offsetX + index - currentRow * props.size.x) * factor;
+    const positionX = (offsetX + index - currentRow * size.x) * factor;
 
     return {
       x: positionX,
