@@ -7,8 +7,9 @@ import { gemsState, startState, tilesState } from "../core/state";
 
 export const Gems = () => {
   const [gems, setGems] = useRecoilState<any>(gemsState);
+  const [tileMap, setTileMap] = useRecoilState(tilesState);
   const start = useRecoilValue(startState);
-  const tiles = useRecoilValue(tilesState);
+  // const tiles = useRecoilValue(tilesState);
 
   useEffect(() => {
     initGems();
@@ -19,11 +20,16 @@ export const Gems = () => {
   const initGems = () => {
     setGems([]);
 
-    const tileCount = tiles.length;
+    const tileCount = tileMap.length;
     const initAmount = Math.floor(tileCount / 2);
 
-    const randomTiles = getRandomTiles(initAmount, tiles);
+    const randomTiles = getRandomTiles(initAmount, tileMap);
     const initGems = randomTiles.map((item: TileProp, index) => {
+      setTileMap((oldTiles) =>
+        [...oldTiles].map((tile: any) =>
+          tile.id === item.id ? { ...tile, empty: false, gemId: index } : tile
+        )
+      );
       return (
         <Gem
           position={[item.x, item.y, 0]}

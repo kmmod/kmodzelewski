@@ -4,11 +4,18 @@ import { ThreeEvent } from "@react-three/fiber";
 import gsap from "gsap";
 import { Html } from "@react-three/drei";
 import { content } from "../../../styles/puzzle.module.scss";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { selectedTile, tilesState } from "../core/state";
 
 export const Tile = (props: TileComponent) => {
   const mesh = useRef(null) as MutableRefObject<any>;
+  const [current, setCurrent] = useRecoilState(selectedTile);
+  const tiles = useRecoilValue(tilesState);
 
-  const onClicked = () => {};
+  const onClicked = () => {
+    setCurrent(props.id);
+    console.log(tiles);
+  };
 
   const onHover = () => {};
 
@@ -33,9 +40,11 @@ export const Tile = (props: TileComponent) => {
       <mesh ref={mesh} scale={[0.95, 0.95, 0.95]}>
         <planeGeometry />
         <meshStandardMaterial color={"white"} roughness={0.9} metalness={0.4} />
-        {/*<Html distanceFactor={10}>*/}
-        {/*  <div className={content}>{options.id}</div>*/}
-        {/*</Html>*/}
+        <Html distanceFactor={10}>
+          <div className={content}>
+            {props.id} {tiles[props.id].empty.toString()}
+          </div>
+        </Html>
       </mesh>
       <mesh
         onPointerOver={(event) => onHover()}

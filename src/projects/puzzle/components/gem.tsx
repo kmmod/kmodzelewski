@@ -5,7 +5,12 @@ import * as THREE from "three";
 import { gemColor, maxColors } from "../core/config";
 import { getRandomId } from "../core/build";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { selectedGem, startState } from "../core/state";
+import {
+  selectedGem,
+  selectedTile,
+  startState,
+  tilesState,
+} from "../core/state";
 
 export const Gem = (props: any) => {
   const [hovered, setHovered] = useState(false);
@@ -13,10 +18,14 @@ export const Gem = (props: any) => {
   const [color, setColor] = useState(String);
 
   const [current, setCurrent] = useRecoilState(selectedGem);
+  const [tileMap, setTileMap] = useRecoilState(tilesState);
+
+  const currentTile = useRecoilValue(selectedTile);
 
   const start = useRecoilValue(startState);
 
   const gem = useRef(null) as MutableRefObject<any>;
+  const group = useRef(null) as MutableRefObject<any>;
   const wobbleMat = useRef(null) as MutableRefObject<any>;
 
   useEffect(() => {
@@ -43,6 +52,43 @@ export const Gem = (props: any) => {
     setCurrent(null);
   }, [start]);
 
+  useEffect(() => {
+    console.log(currentTile);
+
+    const sameTile = currentTile === props.parent;
+
+    if (selected && !sameTile) {
+      moveToTile();
+
+      console.log("now move");
+    }
+  }, [currentTile]);
+
+  const moveToTile = () => {
+    const tileEmpty = tileMap.filter((item: any) => item.id === currentTile);
+    console.log(tileEmpty[0]);
+    if (tileEmpty[0].empty) {
+      gsap.to(group.current.position, {
+        x: tileEmpty[0].x,
+        y: tileEmpty[0].y,
+        duration: 0.5,
+      });
+      setTileMap((oldTiles) =>
+        [...oldTiles].map((tile: any) => {
+          if (tile.id === tileEmpty[0].id) {
+            return { ...tile, empty: false, gemId: props.id };
+          }
+          if (tile.id === props.parent) {
+            return { ...tile, empty: true, gemId: null };
+          } else {
+            return tile;
+          }
+        })
+      );
+      setSelected(false);
+    }
+  };
+
   const onSelected = () => {
     const checkCurrent = current === props.id;
     setCurrent(checkCurrent ? null : props.id);
@@ -59,7 +105,7 @@ export const Gem = (props: any) => {
   };
 
   return (
-    <group position={props.position}>
+    <group ref={group} position={props.position}>
       <mesh ref={gem} position={[0, 0, baseZ]} scale={[0.5, 0.5, 0.5]}>
         <boxGeometry />
         <meshStandardMaterial color={"red"} />
