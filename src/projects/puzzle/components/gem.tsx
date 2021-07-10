@@ -2,20 +2,19 @@ import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { MeshWobbleMaterial } from "@react-three/drei";
 import * as THREE from "three";
-import { gemColor, maxColors } from "../core/config";
-import { getRandomId } from "../core/build";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { gemsState, startState, tilesState } from "../core/state";
+import { gemsState, tilesState, turnState } from "../core/state";
 import { TileProp } from "../core/types";
+import { tile } from "../../../lib/tile";
+import { getRemoveList } from "../core/build";
 
 export const Gem = (props: any) => {
   const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState(false);
-  const [color, setColor] = useState(String);
 
   const [tileMap, setTileMap] = useRecoilState(tilesState);
   const [gems, setGems] = useRecoilState(gemsState);
-  const start = useRecoilValue(startState);
+  const [turn, setTurn] = useRecoilState(turnState);
 
   const gem = useRef(null) as MutableRefObject<any>;
   const group = useRef(null) as MutableRefObject<any>;
@@ -24,18 +23,11 @@ export const Gem = (props: any) => {
   useEffect(() => {
     const scale = hovered ? 0.69 : 0.6;
     gsap.to(gem.current.scale, { x: scale, y: scale, z: scale, duration: 0.5 });
-    document.body.style.cursor = hovered ? "pointer" : "auto";
   }, [hovered]);
 
   useEffect(() => {
     wobbleSize(selected ? 0.5 : 0);
   }, [selected]);
-
-  useEffect(() => {
-    const colorId = getRandomId(maxColors);
-    const newColor = gemColor(colorId);
-    setColor(newColor);
-  }, []);
 
   useEffect(() => {
     const selectedState = tileMap.filter(
@@ -52,17 +44,23 @@ export const Gem = (props: any) => {
     if (selectedTile && clickedTile) {
       moveGem(clickedTile);
       resetTileMap(selectedTile, clickedTile);
+      removeList();
+      newTurn();
     }
   }, [tileMap]);
+
+  useEffect(() => {
+    if (tileMap.filter((item: any) => item.child === props.id)[0]?.remove) {
+      removeGem();
+    }
+  }, [turn]);
 
   const moveGem = (tile: TileProp) => {
     gsap.to(group.current.position, {
       x: tile.x,
       y: tile.y,
       duration: 0.5,
-      onComplete: () => removeGem(),
     });
-    // onComplete ==> turn + 1 => checkneighboors => remove if squared
   };
 
   const resetTileMap = (selected: TileProp, clicked: TileProp) => {
@@ -70,27 +68,57 @@ export const Gem = (props: any) => {
       [...oldMap].map((item: any) => {
         const defState = { clicked: false, selected: false };
         if (item.child === props.id)
-          return { ...item, ...defState, child: null };
+          return { ...item, ...defState, child: null, color: null };
         if (item.id === clicked.id)
-          return { ...item, ...defState, child: props.id };
+          return { ...item, ...defState, child: props.id, color: props.color };
         return { ...item, ...defState };
       })
     );
   };
 
-  const removeGem = () => {
-    console.log("remove");
+  const removeList = () => {
+    setTileMap((oldMap) => {
+      const colorMatch = getRemoveList(props.id, oldMap);
+      return [...oldMap].map((item: any) => {
+        if (colorMatch.some((match: any) => match.id === item.id))
+          return { ...item, remove: true };
+        return item;
+      });
+    });
+  };
 
+  const newTurn = () => {
+    setTurn((oldTurn) => oldTurn + 1);
+  };
+
+  const removeGem = () => {
     setTileMap((oldMap: any) =>
       [...oldMap].map((item: any) => {
-        if (item.child === props.id) return { ...item, child: null };
+        if (item.child === props.id)
+          return { ...item, child: null, color: null, remove: false };
         return item;
       })
     );
 
-    setGems((oldGems) =>
-      [...oldGems].filter((item: any) => item.props.id !== props.id)
-    );
+    const removeFromList = () => {
+      setGems((oldGems) =>
+        [...oldGems].filter((item: any) => item.props.id !== props.id)
+      );
+    };
+
+    gsap.to(group.current.scale, {
+      x: 0,
+      y: 0,
+      z: 0,
+      duration: 1,
+      delay: 0.5,
+    });
+    gsap.to(group.current.position, {
+      z: 0,
+      duration: 1,
+      delay: 0.5,
+      onComplete: () => removeFromList(),
+    });
   };
 
   const baseZ = 0.5;
@@ -113,8 +141,8 @@ export const Gem = (props: any) => {
           ref={wobbleMat}
           factor={0}
           speed={9}
-          color={new THREE.Color(color)}
-          emissive={new THREE.Color(color)}
+          color={new THREE.Color(props.color)}
+          emissive={new THREE.Color(props.color)}
           emissiveIntensity={0.3}
           metalness={0.1}
           roughness={1.0}

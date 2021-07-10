@@ -85,12 +85,13 @@ export const Tile = (props: TileComponent) => {
           metalness={0.4}
         />
         {debug ? (
-          <Html distanceFactor={5}>
+          <Html distanceFactor={3}>
             <div className={content}>
               <p>id:{props.id}</p>
               <p>child:{tileMap[props.id]?.child}</p>
               <p>clicked:{tileMap[props.id]?.clicked.toString()}</p>
               <p>selected:{tileMap[props.id]?.selected.toString()}</p>
+              <p>color:{tileMap[props.id]?.color}</p>
             </div>
           </Html>
         ) : null}

@@ -19,6 +19,8 @@ export interface TileProp extends TileCoord {
   idX: number;
   idY: number;
   child: number | null;
+  color: string | null;
+  remove: boolean;
   hovered: boolean;
   clicked: boolean;
   selected: boolean;

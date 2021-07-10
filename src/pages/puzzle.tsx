@@ -4,7 +4,7 @@ import PuzzleMain from "../projects/puzzle/main";
 import { GridSize } from "../projects/puzzle/components/gridSize";
 
 const PuzzlePage = () => {
-  const [size, setSize] = useState({ x: 3, y: 3 });
+  const [size, setSize] = useState({ x: 8, y: 8 });
 
   return (
     <main>

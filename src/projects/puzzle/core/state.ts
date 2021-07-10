@@ -19,3 +19,8 @@ export const startState = atom({
   key: "start",
   default: 0,
 });
+
+export const turnState = atom({
+  key: "turnState",
+  default: 0,
+});
