@@ -3,9 +3,8 @@ import gsap from "gsap";
 import { MeshWobbleMaterial } from "@react-three/drei";
 import * as THREE from "three";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { gemsState, tilesState, turnState } from "../core/state";
+import { gemsState, scoreState, tilesState, turnState } from "../core/state";
 import { TileProp } from "../core/types";
-import { tile } from "../../../lib/tile";
 import { getRemoveList } from "../core/build";
 
 export const Gem = (props: any) => {
@@ -15,6 +14,7 @@ export const Gem = (props: any) => {
   const [tileMap, setTileMap] = useRecoilState(tilesState);
   const [gems, setGems] = useRecoilState(gemsState);
   const [turn, setTurn] = useRecoilState(turnState);
+  const [score, setScore] = useRecoilState(scoreState);
 
   const gem = useRef(null) as MutableRefObject<any>;
   const group = useRef(null) as MutableRefObject<any>;
@@ -52,6 +52,7 @@ export const Gem = (props: any) => {
   useEffect(() => {
     if (tileMap.filter((item: any) => item.child === props.id)[0]?.remove) {
       removeGem();
+      setScore((oldValue) => oldValue + 10);
     }
   }, [turn]);
 
