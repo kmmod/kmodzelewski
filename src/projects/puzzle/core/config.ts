@@ -1,9 +1,9 @@
 export const gemColor = (id: number): string => {
   const colors = [
     "#ff0000",
-    "#99fc27",
+    "#26ff00",
     "#0099ff",
-    "#ff6d00",
+    "#ff8c00",
     "#6100ff",
     "#ffffff",
     "#5f5f5f",
@@ -12,4 +12,4 @@ export const gemColor = (id: number): string => {
   return colors[id];
 };
 
-export const maxColors = 6;
+export const maxColors = 4;

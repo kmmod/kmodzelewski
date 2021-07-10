@@ -5,22 +5,15 @@ import * as THREE from "three";
 import { gemColor, maxColors } from "../core/config";
 import { getRandomId } from "../core/build";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  selectedGem,
-  selectedTile,
-  startState,
-  tilesState,
-} from "../core/state";
+import { startState, tilesState } from "../core/state";
+import { TileProp } from "../core/types";
 
 export const Gem = (props: any) => {
   const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState(false);
   const [color, setColor] = useState(String);
 
-  const [current, setCurrent] = useRecoilState(selectedGem);
   const [tileMap, setTileMap] = useRecoilState(tilesState);
-
-  const currentTile = useRecoilValue(selectedTile);
 
   const start = useRecoilValue(startState);
 
@@ -45,53 +38,42 @@ export const Gem = (props: any) => {
   }, []);
 
   useEffect(() => {
-    setSelected(current === props.id);
-  }, [current]);
+    const selectedState = tileMap.filter(
+      (item: any) => item.child === props.id
+    )[0];
+    setSelected(selectedState?.selected);
 
-  useEffect(() => {
-    setCurrent(null);
-  }, [start]);
-
-  useEffect(() => {
-    console.log(currentTile);
-
-    const sameTile = currentTile === props.parent;
-
-    if (selected && !sameTile) {
-      moveToTile();
-
-      console.log("now move");
+    const clickedTile = tileMap.filter(
+      (item: any) => item.clicked === true && item.child === null
+    )[0];
+    const selectedTile = tileMap.filter(
+      (item: any) => item.selected === true && item.child === props.id
+    )[0];
+    if (selectedTile && clickedTile) {
+      moveGem(clickedTile);
+      resetTileMap(selectedTile, clickedTile);
     }
-  }, [currentTile]);
+  }, [tileMap]);
 
-  const moveToTile = () => {
-    const tileEmpty = tileMap.filter((item: any) => item.id === currentTile);
-    console.log(tileEmpty[0]);
-    if (tileEmpty[0].empty) {
-      gsap.to(group.current.position, {
-        x: tileEmpty[0].x,
-        y: tileEmpty[0].y,
-        duration: 0.5,
-      });
-      setTileMap((oldTiles) =>
-        [...oldTiles].map((tile: any) => {
-          if (tile.id === tileEmpty[0].id) {
-            return { ...tile, empty: false, gemId: props.id };
-          }
-          if (tile.id === props.parent) {
-            return { ...tile, empty: true, gemId: null };
-          } else {
-            return tile;
-          }
-        })
-      );
-      setSelected(false);
-    }
+  const moveGem = (tile: TileProp) => {
+    gsap.to(group.current.position, {
+      x: tile.x,
+      y: tile.y,
+      duration: 0.5,
+    });
   };
 
-  const onSelected = () => {
-    const checkCurrent = current === props.id;
-    setCurrent(checkCurrent ? null : props.id);
+  const resetTileMap = (selected: TileProp, clicked: TileProp) => {
+    setTileMap((oldMap) =>
+      [...oldMap].map((item: any) => {
+        const defState = { clicked: false, selected: false };
+        if (item.child === props.id)
+          return { ...item, ...defState, child: null };
+        if (item.id === clicked.id)
+          return { ...item, ...defState, child: props.id };
+        return { ...item, ...defState };
+      })
+    );
   };
 
   const baseZ = 0.5;
@@ -115,13 +97,15 @@ export const Gem = (props: any) => {
           factor={0}
           speed={5}
           color={new THREE.Color(color)}
-          emissive={new THREE.Color("#000000")}
+          emissive={new THREE.Color(color)}
+          emissiveIntensity={0.3}
+          metalness={0.1}
+          roughness={1.0}
         />
       </mesh>
       <mesh
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
-        onPointerDown={() => onSelected()}
         visible={false}
       >
         <planeGeometry args={[1.0, 1.0, 1.0]} />

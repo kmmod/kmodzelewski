@@ -3,13 +3,12 @@ import { Gem } from "./gem";
 import { TileProp } from "../core/types";
 import { getRandomTiles } from "../core/build";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { gemsState, startState, tilesState } from "../core/state";
+import { startState, tilesState } from "../core/state";
 
 export const Gems = () => {
-  const [gems, setGems] = useRecoilState<any>(gemsState);
+  const [gems, setGems] = useState<any>([]);
   const [tileMap, setTileMap] = useRecoilState(tilesState);
   const start = useRecoilValue(startState);
-  // const tiles = useRecoilValue(tilesState);
 
   useEffect(() => {
     initGems();
@@ -27,7 +26,7 @@ export const Gems = () => {
     const initGems = randomTiles.map((item: TileProp, index) => {
       setTileMap((oldTiles) =>
         [...oldTiles].map((tile: any) =>
-          tile.id === item.id ? { ...tile, empty: false, gemId: index } : tile
+          tile.id === item.id ? { ...tile, child: index } : tile
         )
       );
       return (

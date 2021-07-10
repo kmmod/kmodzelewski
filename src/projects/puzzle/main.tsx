@@ -13,9 +13,9 @@ const PuzzleMain = (props: PuzzleOptions) => {
     <div className={container}>
       <Canvas>
         <RecoilRoot>
-          <ambientLight intensity={0.1} />
-          <pointLight position={[0, 10, 5]} intensity={0.5} color={"orange"} />
-          <pointLight position={[0, -10, 5]} intensity={0.2} color={"blue"} />
+          <ambientLight intensity={0.0} />
+          <pointLight position={[0, 10, 5]} intensity={0.5} color={0xf68151} />
+          <pointLight position={[0, -10, 5]} intensity={0.5} color={0x51c7f6} />
           <TileMap size={props.size} />
           <Tiles />
           <Gems />

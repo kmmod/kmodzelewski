@@ -7,7 +7,6 @@ import { createTileMap } from "../core/build";
 export const TileMap = (props: any): null => {
   const [tiles, setTiles] = useRecoilState<TileProp[]>(tilesState);
   const [start, setStart] = useRecoilState<number>(startState);
-  const [current, setCurrent] = useRecoilState(selectedGem);
 
   useEffect(() => {
     const tileMap = createTileMap(props.size);

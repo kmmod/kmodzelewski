@@ -16,11 +16,10 @@ export interface TileCoord extends Vector2d {
 }
 
 export interface TileProp extends TileCoord {
-  gemId: number | null;
+  child: number | null;
   hovered: boolean;
   clicked: boolean;
   selected: boolean;
-  empty: boolean;
 }
 
 export interface TileComponent extends TileCoord {
