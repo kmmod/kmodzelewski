@@ -7,16 +7,21 @@ export const createTileMap = (size: Vector2d): TileProp[] => {
 
   return [...Array(listSize)].map((item: any, index: number) => {
     const currentRow = Math.trunc(index / size.x);
-    const offsetY = 0 - size.y / 2 + step / 2;
     const offsetX = 0 - size.x / 2 + step / 2;
+    const offsetY = 0 - size.y / 2 + step / 2;
 
-    const positionY = (offsetY + currentRow) * factor;
     const positionX = (offsetX + index - currentRow * size.x) * factor;
+    const positionY = (offsetY + currentRow) * factor;
+
+    const idX = index - currentRow * size.x;
+    const idY = currentRow;
 
     return {
       x: positionX,
       y: positionY,
       id: index,
+      idX,
+      idY,
       child: null,
       hovered: false,
       clicked: false,

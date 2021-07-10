@@ -5,6 +5,11 @@ export const tilesState = atom({
   default: [],
 });
 
+export const gemsState = atom({
+  key: "gemsState",
+  default: [],
+});
+
 export const scoreState = atom({
   key: "score",
   default: 0,

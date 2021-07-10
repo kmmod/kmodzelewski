@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { gemColor, maxColors } from "../core/config";
 import { getRandomId } from "../core/build";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { startState, tilesState } from "../core/state";
+import { gemsState, startState, tilesState } from "../core/state";
 import { TileProp } from "../core/types";
 
 export const Gem = (props: any) => {
@@ -14,7 +14,7 @@ export const Gem = (props: any) => {
   const [color, setColor] = useState(String);
 
   const [tileMap, setTileMap] = useRecoilState(tilesState);
-
+  const [gems, setGems] = useRecoilState(gemsState);
   const start = useRecoilValue(startState);
 
   const gem = useRef(null) as MutableRefObject<any>;
@@ -22,13 +22,13 @@ export const Gem = (props: any) => {
   const wobbleMat = useRef(null) as MutableRefObject<any>;
 
   useEffect(() => {
+    const scale = hovered ? 0.69 : 0.6;
+    gsap.to(gem.current.scale, { x: scale, y: scale, z: scale, duration: 0.5 });
     document.body.style.cursor = hovered ? "pointer" : "auto";
-    wobbleSize(hovered ? 0.2 : 0);
   }, [hovered]);
 
   useEffect(() => {
-    const scale = selected ? 0.8 : 0.6;
-    gsap.to(gem.current.scale, { x: scale, y: scale, z: scale, duration: 0.5 });
+    wobbleSize(selected ? 0.5 : 0);
   }, [selected]);
 
   useEffect(() => {
@@ -60,7 +60,9 @@ export const Gem = (props: any) => {
       x: tile.x,
       y: tile.y,
       duration: 0.5,
+      onComplete: () => removeGem(),
     });
+    // onComplete ==> turn + 1 => checkneighboors => remove if squared
   };
 
   const resetTileMap = (selected: TileProp, clicked: TileProp) => {
@@ -76,12 +78,27 @@ export const Gem = (props: any) => {
     );
   };
 
+  const removeGem = () => {
+    console.log("remove");
+
+    setTileMap((oldMap: any) =>
+      [...oldMap].map((item: any) => {
+        if (item.child === props.id) return { ...item, child: null };
+        return item;
+      })
+    );
+
+    setGems((oldGems) =>
+      [...oldGems].filter((item: any) => item.props.id !== props.id)
+    );
+  };
+
   const baseZ = 0.5;
 
   const wobbleSize = (size: number) => {
     gsap.to(wobbleMat.current, {
       factor: size,
-      duration: 1.0,
+      duration: 0.5,
     });
     gsap.to(gem.current.position, { z: baseZ + size / 2, duration: 1.0 });
   };
@@ -95,7 +112,7 @@ export const Gem = (props: any) => {
         <MeshWobbleMaterial
           ref={wobbleMat}
           factor={0}
-          speed={5}
+          speed={9}
           color={new THREE.Color(color)}
           emissive={new THREE.Color(color)}
           emissiveIntensity={0.3}

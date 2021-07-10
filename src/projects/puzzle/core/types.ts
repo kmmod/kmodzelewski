@@ -16,6 +16,8 @@ export interface TileCoord extends Vector2d {
 }
 
 export interface TileProp extends TileCoord {
+  idX: number;
+  idY: number;
   child: number | null;
   hovered: boolean;
   clicked: boolean;

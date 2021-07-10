@@ -3,15 +3,16 @@ import { Gem } from "./gem";
 import { TileProp } from "../core/types";
 import { getRandomTiles } from "../core/build";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { startState, tilesState } from "../core/state";
+import { gemsState, startState, tilesState } from "../core/state";
 
 export const Gems = () => {
-  const [gems, setGems] = useState<any>([]);
+  const [gems, setGems] = useRecoilState(gemsState);
   const [tileMap, setTileMap] = useRecoilState(tilesState);
   const start = useRecoilValue(startState);
 
   useEffect(() => {
-    initGems();
+    const init = initGems();
+    setGems(init);
   }, [start]);
 
   const gemClicked = (id: number) => {};
@@ -40,7 +41,7 @@ export const Gems = () => {
         />
       );
     });
-    setGems(initGems);
+    return initGems;
   };
 
   return <>{gems}</>;

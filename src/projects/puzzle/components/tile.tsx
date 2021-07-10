@@ -15,6 +15,7 @@ export const Tile = (props: TileComponent) => {
 
   const onClicked = () => {
     const tile = tileMap.filter((item: TileProp) => item.id === props.id)[0];
+    console.log(tile.idX, tile.idY);
     const preparedTile = () => {
       if (tile.child === null) return { ...tile, clicked: true };
       if (!tile.selected) return { ...tile, clicked: true, selected: true };
