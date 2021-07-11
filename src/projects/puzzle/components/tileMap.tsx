@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { scoreState, startState, tilesState } from "../core/state";
 import { createTileMap } from "../core/build";
 
-export const TileMap = (props: any): null => {
+export const TileMap = (props: any): any => {
   const [tiles, setTiles] = useRecoilState<TileProp[]>(tilesState);
   const [start, setStart] = useRecoilState<number>(startState);
   const [score, setScore] = useRecoilState<number>(scoreState);
