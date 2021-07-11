@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { container } from "../../styles/puzzle.module.scss";
 import { PuzzleOptions } from "./core/types";
 import { Camera } from "./components/camera";
-import { TileMap } from "./components/TileMap";
+import { TileMap } from "./components/tileMap";
 import { RecoilRoot } from "recoil";
 import { Tiles } from "./components/tiles";
 import { Gems } from "./components/gems";
