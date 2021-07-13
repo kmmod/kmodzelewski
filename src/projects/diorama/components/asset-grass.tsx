@@ -19,16 +19,14 @@ export default function SwampGrass(props: JSX.IntrinsicElements["group"]) {
   ) as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="swamp-grass-MERGED"
-          castShadow
-          receiveShadow
-          geometry={nodes["swamp-grass-MERGED"].geometry}
-          material={materials["swamp-land"]}
-          userData={{ name: "swamp-grass-MERGED" }}
-        />
-      </group>
+      <mesh
+        name="swamp-grass-MERGED"
+        castShadow
+        receiveShadow
+        geometry={nodes["swamp-grass-MERGED"].geometry}
+        material={materials["swamp-land"]}
+        userData={{ name: "swamp-grass-MERGED" }}
+      />
     </group>
   );
 }

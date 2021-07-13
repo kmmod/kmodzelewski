@@ -19,16 +19,14 @@ export default function SwampLily(props: JSX.IntrinsicElements["group"]) {
   ) as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="swamp-lily-MERGED"
-          castShadow
-          receiveShadow
-          geometry={nodes["swamp-lily-MERGED"].geometry}
-          material={materials["swamp-plant-lily"]}
-          userData={{ name: "swamp-lily-MERGED" }}
-        />
-      </group>
+      <mesh
+        name="swamp-lily-MERGED"
+        castShadow
+        receiveShadow
+        geometry={nodes["swamp-lily-MERGED"].geometry}
+        material={materials["swamp-plant-lily"]}
+        userData={{ name: "swamp-lily-MERGED" }}
+      />
     </group>
   );
 }

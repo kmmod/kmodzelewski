@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import { MeshDistortMaterial, useGLTF } from "@react-three/drei";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 type GLTFResult = GLTF & {
@@ -19,16 +19,14 @@ export default function SwampWater(props: JSX.IntrinsicElements["group"]) {
   ) as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="swamp-water-MERGED"
-          castShadow
-          receiveShadow
-          geometry={nodes["swamp-water-MERGED"].geometry}
-          material={materials["swamp-water"]}
-          userData={{ name: "swamp-water-MERGED" }}
-        />
-      </group>
+      <mesh
+        name="swamp-water-MERGED"
+        castShadow
+        receiveShadow
+        geometry={nodes["swamp-water-MERGED"].geometry}
+        material={materials["swamp-water"]}
+        userData={{ name: "swamp-water-MERGED" }}
+      />
     </group>
   );
 }

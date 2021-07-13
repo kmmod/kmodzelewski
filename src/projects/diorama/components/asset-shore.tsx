@@ -19,16 +19,14 @@ export default function SwampShore(props: JSX.IntrinsicElements["group"]) {
   ) as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="swamp-shore-MERGED"
-          castShadow
-          receiveShadow
-          geometry={nodes["swamp-shore-MERGED"].geometry}
-          material={materials["swamp-grass-shore"]}
-          userData={{ name: "swamp-shore-MERGED" }}
-        />
-      </group>
+      <mesh
+        name="swamp-shore-MERGED"
+        castShadow
+        receiveShadow
+        geometry={nodes["swamp-shore-MERGED"].geometry}
+        material={materials["swamp-grass-shore"]}
+        userData={{ name: "swamp-shore-MERGED" }}
+      />
     </group>
   );
 }

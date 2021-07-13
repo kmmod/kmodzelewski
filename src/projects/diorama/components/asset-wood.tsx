@@ -5,10 +5,11 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 type GLTFResult = GLTF & {
   nodes: {
-    ["wood-log"]: THREE.Mesh;
+    woodlog: THREE.Mesh;
+    woodlog001: THREE.Mesh;
   };
   materials: {
-    ["wood-log"]: THREE.MeshStandardMaterial;
+    wood_log_16_32_16: THREE.MeshStandardMaterial;
   };
 };
 
@@ -19,16 +20,22 @@ export default function SwampWood(props: JSX.IntrinsicElements["group"]) {
   ) as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="wood-log"
-          castShadow
-          receiveShadow
-          geometry={nodes["wood-log"].geometry}
-          material={materials["wood-log"]}
-          userData={{ name: "wood-log" }}
-        />
-      </group>
+      <mesh
+        name="woodlog"
+        castShadow
+        receiveShadow
+        geometry={nodes.woodlog.geometry}
+        material={nodes.woodlog.material}
+        userData={{ name: "wood.log" }}
+      />
+      <mesh
+        name="woodlog001"
+        castShadow
+        receiveShadow
+        geometry={nodes.woodlog001.geometry}
+        material={nodes.woodlog001.material}
+        userData={{ name: "wood.log.001" }}
+      />
     </group>
   );
 }

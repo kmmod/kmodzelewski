@@ -13,8 +13,15 @@ import SwampLily from "./components/asset-lily";
 const SwampDiorama = () => {
   return (
     <>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} intensity={0.2} />
+      {/*<ambientLight />*/}
+      <hemisphereLight intensity={0.1} />
+      <spotLight
+        position={[0, 10, 0]}
+        angle={1}
+        penumbra={1}
+        castShadow={true}
+      />
+      {/*<pointLight position={[10, 10, 10]} intensity={0.2} />*/}
       <PerspectiveCamera
         makeDefault={true}
         position={[20, 25, -20]}

@@ -17,16 +17,14 @@ export default function Character31(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/diorama/swamp-31.gltf") as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="31"
-          castShadow
-          receiveShadow
-          geometry={nodes["31"].geometry}
-          material={materials["31"]}
-          userData={{ name: "31" }}
-        />
-      </group>
+      <mesh
+        name="31"
+        castShadow
+        receiveShadow
+        geometry={nodes["31"].geometry}
+        material={materials["31"]}
+        userData={{ name: "31" }}
+      />
     </group>
   );
 }

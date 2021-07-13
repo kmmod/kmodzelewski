@@ -7,6 +7,7 @@ import { Canvas } from "@react-three/fiber";
 import { Link } from "gatsby";
 import { title, wrapper } from "../styles/main.module.scss";
 import SwampDiorama from "../projects/diorama/main";
+import * as THREE from "three";
 
 const IndexPage = () => {
   return (
@@ -16,6 +17,9 @@ const IndexPage = () => {
       <Canvas
         className={wrapper}
         style={{ width: `100%`, height: `100vh`, position: `absolute` }}
+        onCreated={({ gl }) => {
+          gl.toneMapping = THREE.ReinhardToneMapping;
+        }}
       >
         <SwampDiorama />
       </Canvas>

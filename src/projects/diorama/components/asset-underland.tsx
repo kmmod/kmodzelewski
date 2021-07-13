@@ -19,16 +19,14 @@ export default function SwampUnderland(props: JSX.IntrinsicElements["group"]) {
   ) as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene">
-        <mesh
-          name="swamp-underland-MERGED001"
-          castShadow
-          receiveShadow
-          geometry={nodes["swamp-underland-MERGED001"].geometry}
-          material={materials["swamp-underland"]}
-          userData={{ name: "swamp-underland-MERGED.001" }}
-        />
-      </group>
+      <mesh
+        name="swamp-underland-MERGED001"
+        castShadow
+        receiveShadow
+        geometry={nodes["swamp-underland-MERGED001"].geometry}
+        material={materials["swamp-underland"]}
+        userData={{ name: "swamp-underland-MERGED.001" }}
+      />
     </group>
   );
 }
