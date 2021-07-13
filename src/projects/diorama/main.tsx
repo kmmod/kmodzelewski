@@ -9,19 +9,18 @@ import Character31 from "./components/assets-31";
 import SwampStones from "./components/assets-stones";
 import SwampWood from "./components/asset-wood";
 import SwampLily from "./components/asset-lily";
+import SwampGrasses from "./components/asset-grasses";
 
 const SwampDiorama = () => {
   return (
     <>
-      {/*<ambientLight />*/}
       <hemisphereLight intensity={0.1} />
       <spotLight
         position={[0, 10, 0]}
-        angle={1}
+        intensity={1.5}
+        angle={0.8}
         penumbra={1}
-        castShadow={true}
       />
-      {/*<pointLight position={[10, 10, 10]} intensity={0.2} />*/}
       <PerspectiveCamera
         makeDefault={true}
         position={[20, 25, -20]}
@@ -35,29 +34,22 @@ const SwampDiorama = () => {
       />
       <Suspense fallback={null}>
         <SwampShore />
-      </Suspense>
-      <Suspense fallback={null}>
-        <SwampUnderland />
-      </Suspense>
-      <Suspense fallback={null}>
-        <SwampBottom />
-      </Suspense>
-      <Suspense fallback={null}>
         <SwampWater />
       </Suspense>
       <Suspense fallback={null}>
+        <SwampBottom />
+        <SwampUnderland />
+      </Suspense>
+      <Suspense fallback={null}>
         <SwampGrass />
+        <SwampGrasses />
       </Suspense>
       <Suspense fallback={null}>
         <Character31 />
       </Suspense>
       <Suspense fallback={null}>
-        <SwampStones />
-      </Suspense>
-      <Suspense fallback={null}>
         <SwampWood />
-      </Suspense>
-      <Suspense fallback={null}>
+        <SwampStones />
         <SwampLily />
       </Suspense>
     </>

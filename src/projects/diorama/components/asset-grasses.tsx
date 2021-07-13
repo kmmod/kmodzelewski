@@ -5,30 +5,30 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 type GLTFResult = GLTF & {
   nodes: {
-    ["swamp-water-MERGED"]: THREE.Mesh;
+    ["swamp-grasses-MERGED"]: THREE.Mesh;
   };
   materials: {
-    ["swamp-water"]: THREE.MeshPhysicalMaterial;
+    ["grass-slices"]: THREE.MeshStandardMaterial;
   };
 };
 
-export default function SwampWater(props: JSX.IntrinsicElements["group"]) {
+export default function SwampGrasses(props: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>();
   const { nodes, materials } = useGLTF(
-    "/diorama/swamp-diorama-water.gltf"
+    "/diorama/swamp-diorama-grasses.gltf"
   ) as GLTFResult;
   return (
     <group ref={group} {...props} dispose={null}>
       <mesh
-        name="swamp-water-MERGED"
+        name="swamp-grasses-MERGED"
         castShadow
         receiveShadow
-        geometry={nodes["swamp-water-MERGED"].geometry}
-        material={materials["swamp-water"]}
-        userData={{ name: "swamp-water-MERGED" }}
+        geometry={nodes["swamp-grasses-MERGED"].geometry}
+        material={materials["grass-slices"]}
+        userData={{ name: "swamp-grasses-MERGED" }}
       />
     </group>
   );
 }
 
-useGLTF.preload("/diorama/swamp-diorama-water.gltf");
+useGLTF.preload("/diorama/swamp-diorama-grasses.gltf");
