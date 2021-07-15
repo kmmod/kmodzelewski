@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Header from "../components/home/header";
-import PuzzleMain from "../projects/puzzle/main";
-import { GridSize } from "../projects/puzzle/components/gridSize";
+import Header from "../../components/home/header";
+import PuzzleMain from "../../projects/puzzle/main";
+import { GridSize } from "../../projects/puzzle/components/gridSize";
 
 const PuzzlePage = () => {
   const [size, setSize] = useState({ x: 8, y: 8 });

@@ -8,12 +8,13 @@ import { Link } from "gatsby";
 import { title, wrapper } from "../styles/main.module.scss";
 import SwampDiorama from "../projects/diorama/main";
 import * as THREE from "three";
+import Nav from "../components/nav";
 
 const IndexPage = () => {
   return (
-    <main>
-      <Header />
-      <About />
+    <>
+      <Nav />
+      {/*<About />*/}
       <Canvas
         className={wrapper}
         style={{ width: `100%`, height: `100vh`, position: `absolute` }}
@@ -23,7 +24,7 @@ const IndexPage = () => {
       >
         <SwampDiorama />
       </Canvas>
-    </main>
+    </>
   );
 };
 

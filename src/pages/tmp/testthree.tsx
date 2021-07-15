@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Render } from "../lib/main";
-import { wrapper } from "../styles/main.module.scss";
+import { Render } from "../../lib/main";
+import { wrapper } from "../../styles/main.module.scss";
 
 const Test = () => {
   useEffect(() => {

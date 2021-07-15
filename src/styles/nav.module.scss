@@ -1,0 +1,39 @@
+@use "vars" as *;
+
+@mixin link {
+  & a {
+    text-decoration: none;
+    font-family: sans-serif;
+    color: $colour-primary;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  z-index: 10;
+}
+
+.container {
+  padding: 1rem;
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+
+  @include link;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+  @include link;
+}
+
+.pages {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  @include link;
+}

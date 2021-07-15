@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { title, wrapper } from "../styles/main.module.scss";
+import { title, wrapper } from "../../styles/main.module.scss";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 
 const tile = (position: any, index: number) => {
